@@ -1,0 +1,49 @@
+(ns audsk.utils
+  (:use [overtone.live]))
+
+
+;; (hz-field :c :minor 4 2)
+(defn hz-field [root scale-name start-oct num-octs]
+  (let [scale-len (count (scale-name SCALE))
+	begin     (* scale-len (inc start-oct))
+	amount    (* scale-len num-octs)
+	m-notes   (subvec (vec (scale-field root scale-name)) 
+			  begin
+			  (+ begin amount))
+	freqs     (map midi->hz m-notes)]
+    freqs))
+
+(defn auto-tune-helper
+  "Helper function. Prefer the more user-friendly (auto-tune) function."
+  [freq hz-field]
+  (letfn [(nearest-freq
+	   [f hzs]
+	   (second
+	    (reduce (fn [[f fa] fb]
+		      (if (= :none fa)
+			[f fb]
+			(let [dfa (Math/abs (- fa f))
+			      dfb (Math/abs (- fb f))]
+			  (if (< dfb dfa)
+			    [f fb]
+			    [f fa]))))
+			 
+		    [f :none]
+		    hzs)))]
+    (nearest-freq freq hz-field)))
+
+(defn auto-tune [f root scale-name]
+  (let [hz-field (map midi->hz (scale-field root scale-name))]
+    (auto-tune-helper f hz-field)))
+
+
+(let [notes (scale :a4 :chromatic (range 1 13))
+      hzs   (map midi->hz notes)
+      freq  672]
+  (let [[orig neue]
+	]
+    (beep orig)
+    (Thread/sleep 1000)
+    (ctl beep :freq neue)
+    (Thread/sleep 1000)
+    (stop)))

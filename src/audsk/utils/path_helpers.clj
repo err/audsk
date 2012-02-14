@@ -1,0 +1,22 @@
+(ns audsk.utils.path-helpers)
+
+
+;; (def pos-infinity Double/POSITIVE_INFINITY)
+;; (def neg-infinity Double/NEGATIVE_INFINITY)
+
+;; (defn path-bounds
+;;   "Returns map containing the following keys: (:min-x :min-y :max-x :max-y)"
+;;   [pts]
+;;   (reduce (fn [m [p t]]
+;; 	    (assoc m
+;; 	      :min-x (min (first  p) (:min-x m))
+;; 	      :min-y (min (second p) (:min-y m))
+;; 	      :max-x (max (first  p) (:max-x m))
+;; 	      :max-y (max (second p) (:max-y m))))
+;; 	  {:min-x pos-infinity
+;; 	   :min-y pos-infinity
+;; 	   :max-x neg-infinity 
+;; 	   :max-y neg-infinity}
+;; 	  pts))
+
+

@@ -1,0 +1,29 @@
+(ns audsk.looper
+  (:use [overtone.live]))
+
+(defrecord AudioPoint   [pos time etc])
+
+(defrecord AudioCurve   [path    ;; AudioPoint
+			 time-start
+			 time-end
+			 bounds  {}
+			 width   ;; computed from bounds
+			 height  ;; computed from bounds
+			 player  ;; overtone playback fn
+			 ])
+
+(defrecord PlaybackHead [curve      ;; AudioCurve
+			 tempo      ;;
+			 key        
+			 voice      
+			 curr-point 
+			 frequency-bins])
+
+
+
+
+
+
+
+
+

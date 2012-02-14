@@ -1,0 +1,76 @@
+(ns audsk.utils.tuio-helpers
+  (:use     [audsk.tuio]
+	    [audsk.models]
+	    [audsk.utils.misc :only [pos-infinity neg-infinity normalize]])
+  (:import  [TUIO TuioPoint]
+	    [audsk.models Point]))
+
+(defn tuio-point->pos
+  [^TuioPoint tp w h]
+  (vector (.getScreenX tp w) (.getScreenY tp h)))
+
+(defn tuio-timestamp
+  [^TuioPoint tp]
+  (.. tp getTuioTime getTotalMilliseconds))
+
+(defn tuio-path->clj
+  "input is Vector<TuioPoint>"
+  [path]
+  (doall (map (fn [^TuioPoint tp]
+		[(tuio-point->pos tp) (tuio-timestamp tp)])
+	      path)))
+
+(defn tuio-path-bounds
+  "Returns map containing the following keys: (:min-x :min-y :max-x :max-y)"
+  [tuio-path]
+  (reduce (fn [m ^TuioPoint p]
+	    (let [x (.getX p)
+		  y (.getY p)]
+	      (assoc m
+		:min-x (min x (:min-x m))
+		:min-y (min y (:min-y m))
+		:max-x (max x (:max-x m))
+		:max-y (max y (:max-y m)))))
+	  {:min-x pos-infinity
+	   :min-y pos-infinity
+	   :max-x neg-infinity 
+	   :max-y neg-infinity}
+	  tuio-path))
+
+
+(defn TuioPoint->Point
+  "Converts a TuioPint into a Point Object."
+  [^TuioPoint tp]
+  (let [time (tuio-timestamp tp)]
+    (->Point [(.getX tp) (.getY tp)] {:time time})))
+
+
+(defn TuioPath->Path
+  "Converts an ArrayList<TuioPoint> into a lazy-seq of [x y] points,
+   normalized about an origin corresponding to the top-left corner of the path's bounding box.
+
+   Returns a map containing the normalized path and the world coordinates of its's origin.
+   Map keys: (:path :origin)"
+  [tuio-path]
+  (let [bounds (tuio-path-bounds tuio-path)
+	{:keys [min-x min-y max-x max-y]} bounds
+	width  (- max-x min-x)
+	height (- max-y min-y)
+	points (map (fn [^TuioPoint tp]
+		      (let [x (.getX tp) y (.getY tp)
+			    norm-x (normalize x min-x  width) 
+			    norm-y (normalize y min-y height)
+			    time   (tuio-timestamp tp)]
+			(->Point [norm-x norm-y] {:time time})))
+		    tuio-path)]
+    {:origin [min-x min-y]
+     :width  width
+     :height height
+     :path   points}))
+
+(defn tuio->clj
+  "strips the data out of any TuioPoint/ [Cursor/Object/Time] "
+  [tobj])
+(defn ->path
+  "takes tuio cursor and returns a proper path"
+  [c])

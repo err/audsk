@@ -1,0 +1,38 @@
+(ns audsk.comm
+  (:use [audsk.utils]
+	[overtone.osc]))
+
+
+(def SRV-PORT              5995)
+(def CLI-PORT             12000)
+(def CLI-ADDR "143.215.108.242")
+
+(def nick-srv (atom nil))
+(def nick-cli (atom (osc-client CLI-ADDR CLI-PORT)))
+
+(defn init-osc
+  ([]
+     (init-osc SRV-PORT))
+  ([port]
+     (reset! nick-srv (osc-server port))))
+
+(osc-handle @nick-srv "/playCurve" #'play-curve-hdlr)
+(osc-handle @nick-srv "/playNote"  #'play-note-hdlr)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(doseq [val (range 10)]
+  (osc-send @nick-client "/test" "i" val))
