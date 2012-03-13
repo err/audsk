@@ -68,9 +68,9 @@
      :height height
      :path   points}))
 
-(defn tuio->clj
-  "strips the data out of any TuioPoint/ [Cursor/Object/Time] "
-  [tobj])
-(defn ->path
-  "takes tuio cursor and returns a proper path"
-  [c])
+;; (defn tuio->clj
+;;   "strips the data out of any TuioPoint/ [Cursor/Object/Time] "
+;;   [tobj])
+;; (defn ->path
+;;   "takes tuio cursor and returns a proper path"
+;;   [c])

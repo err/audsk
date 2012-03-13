@@ -50,7 +50,7 @@
    normalized about an origin corresponding to the top-left corner of the path's bounding box.
 
    Returns a map containing the normalized path and the world coordinates of its's origin.
-   Map keys: (:path :origin)"
+   Map keys: (:path :origin :width :height)"
   [tuio-path]
   (let [bounds (tuio-path-bounds tuio-path)
 	{:keys [min-x min-y max-x max-y]} bounds

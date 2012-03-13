@@ -64,7 +64,6 @@
 	(image-mode CENTER)
 	(image img 0 0)))))
 
-
 (set! *warn-on-reflection* true)
 
 ;; # UTILS
@@ -130,7 +129,7 @@
      ;; 1200
      ;; 700
      )
-(def ^:dynamic *time*      (atom 0))
+(def ^:dynamic *time*    (atom   0))
 (def ^:dynamic *fps*     (atom 0.0))
 (def ^:dynamic *font*    (atom nil))
 
@@ -309,9 +308,9 @@
 		      2 #'bop})
 
 (def ^{:dynamic true} *players*
-     (atom {0 #'beep
-	    1 #'meep
-	    2 #'bop}))
+      (atom {0 #'beep
+	     1 #'meep
+	     2 #'bop}))
 
 (defn reset-player-defaults
   []
@@ -424,8 +423,7 @@
 
 
 
-(def ^:dynamic *curves* (atom #{}))
-(def ^:dynamic *scalr* (atom 3000.0))
+(def ^:dynamic *curves* (atom    #{}))
 
 (let [scalar 500]
   (defn d-point
