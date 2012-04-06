@@ -1,10 +1,22 @@
 # audsk
 
-FIXME: write description
+A simple proof of concept for sketching music.
+
+the mapping is painfully direct.. doesn't support multiple player functions at present.
+
+built in collaboration one weekend with Nicholas Davis @ gatech 
+
+
+
 
 ## Usage
 
-FIXME: write
+We usually run this on an interactive whiteboard.. [wiimote whiteboard]
+
+You'll need a TuioSimulator to draw stuff:
+http://prdownloads.sourceforge.net/reactivision/TUIO_Simulator-1.4.zip?download
+
+
 
 ## License
 
